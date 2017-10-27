@@ -5,19 +5,19 @@
 
 function q = SOLEQ(Db, Dr)
 
-    n = length(Db(1,:));
+    n = length(Db(1, :));
 
     if n > 1
     
-        V1 = V_matrix(Db(:,1), Dr(:,1));
-        Vn = V_matrix(Db(:,n), Dr(:,n));
+        V1 = V_matrix(Db(:, 1), Dr(:, 1));
+        Vn = V_matrix(Db(:, n), Dr(:, n));
     
         P = eye(4);
         
         if n > 2
         
             for i = 2 : n - 1
-                P = P * (W_matrix(Db(:,i), Dr(:,i)) + eye(4)) * 0.5;
+                P = P * (W_matrix(Db(:, i), Dr(:, i)) + eye(4)) * 0.5;
             end
         
         end
@@ -25,15 +25,15 @@ function q = SOLEQ(Db, Dr)
         N=[
             0, 0, 0, 0;
             0, 0, 0, 0;
-            V1(1,3), V1(2,3), V1(3,3), V1(4,3);
-            V1(1,4), V1(2,4), V1(3,4), V1(4,4);
+            V1(1, 3), V1(2, 3), V1(3, 3), V1(4, 3);
+            V1(1, 4), V1(2, 4), V1(3, 4), V1(4, 4);
         ] ...
         * P * ...
         [
-            0, 0, Vn(1,3), Vn(1,4);
-            0, 0, Vn(2,3), Vn(2,4);
-            0, 0, Vn(3,3), Vn(3,4);
-            0, 0, Vn(4,3), Vn(4,4);
+            0, 0, Vn(1, 3), Vn(1, 4);
+            0, 0, Vn(2, 3), Vn(2, 4);
+            0, 0, Vn(3, 3), Vn(3, 4);
+            0, 0, Vn(4, 3), Vn(4, 4);
         ];
         
         n1 = N(3, 3);
@@ -49,16 +49,16 @@ function q = SOLEQ(Db, Dr)
     
         g2 = 0.5 * (u1 - u4 + sqrt_delta) / u2;
     
-        q = [V1(1,4) + V1(1,3) * g2;
-             V1(2,4) + V1(2,3) * g2;
-             V1(3,4) + V1(3,3) * g2;
-             V1(4,4) + V1(4,3) * g2];
+        q = [V1(1, 4) + V1(1, 3) * g2;
+             V1(2, 4) + V1(2, 3) * g2;
+             V1(3, 4) + V1(3, 3) * g2;
+             V1(4, 4) + V1(4, 3) * g2];
         
     else
         
-        q = ((W_matrix(Db(:,1), Dr(:,1)) + eye(4)) * 0.5) * [1;0;0;0];
+        q = ((W_matrix(Db(:, 1), Dr(:, 1)) + eye(4)) * 0.5) * [1; 0; 0; 0];
         
     end
     
-    q = q./norm(q);
+    q = q ./ norm(q);
 end
